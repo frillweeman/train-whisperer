@@ -1,0 +1,26 @@
+version: '3'
+services:
+  shoutcast-monitor:
+    build: ./shoutcast-monitor
+    volumes:
+      - ./shoutcast-monitor:/app
+    depends_on:
+      - mongo
+    networks:
+      - service-link
+  mongo:
+    image: mongodb/mongodb-community-server
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=asshat
+    #   - MONGO_INITDB_ROOT_PASSWORD=penis
+    volumes:
+      - type: bind
+        source: ./data
+        target: /data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - service-link
+networks:
+  service-link:
+    driver: bridge
