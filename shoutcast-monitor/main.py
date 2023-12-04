@@ -11,6 +11,7 @@ import sys
 from dotenv import load_dotenv
 import configparser
 from TranscriptionStorageService import TranscriptionStorageService
+from shared.MQService import MQService
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -19,6 +20,8 @@ logging.basicConfig(level=logging.ERROR)
 
 ts = TranscriptionService(os.getenv("OPENAI_API_KEY"))
 tss = TranscriptionStorageService()
+mqs = MQService(host="rabbitmq", exchange=config["mqservice"]["exchange"])
+mqs.connect()
 
 # Delete files upon exit
 def signal_handler(sig, frame):
@@ -32,11 +35,14 @@ signal.signal(signal.SIGINT, signal_handler)
 
 # Define a new function to handle transcription
 def handle_transcription(filename):
-  text = ts.transcribe(filename)
-  tss.add_entry({
+  messages = ts.transcribe(filename)
+  entries = map(lambda message: {
     'timestamp': datetime.now(),
-    'transcription': text
-  })
+    'transcription': message
+  }, messages)
+  tss.add_entries(entries)
+  for message in entries: # send to RabbitMQ for SSE server
+    mqs.publish_event(message)
   timestamped_transcription = datetime.now().strftime("%H:%M:%S: ") + text
   print("\rNew DB entry\t" + timestamped_transcription)
   os.remove("recordings/" + filename)

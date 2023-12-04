@@ -1,0 +1,57 @@
+<script>
+  import { onMount, onDestroy } from "svelte";
+
+  export let messages = [];
+  export let channelNames = [""];
+
+  let scrollableContainer;
+  let scrollSmooth = false;
+
+  function scrollToBottom() {
+    scrollableContainer.scrollTop = scrollableContainer.scrollHeight;
+  };
+
+  function onNewMessage() {
+    const isCloseToEnd = scrollableContainer.scrollHeight - scrollableContainer.scrollTop - scrollableContainer.clientHeight < 100;
+    if (isCloseToEnd) {
+      console.log("attempting to scroll to the bottom");
+      scrollToBottom();
+    } else {
+      console.log("not scrolling to the bottom");
+    }
+  }
+
+  onMount(() => {
+    scrollToBottom(); // jump to bottom on first load
+    scrollSmooth = true; // smoothly scroll to bottom on new messages
+  });
+
+</script>
+
+<div bind:this={scrollableContainer} class="chat-container overflow-auto pt-3" class:scroll-smooth={scrollSmooth}>
+  {#each messages as message}
+    <div class="chat chat-start">
+      <!-- <div class="chat-header">
+        <span class="mx-2 text-xs">{channelNames[message.channel]}</span>
+      </div> -->
+      <div class="chat-bubble">{message.text}</div>
+      <div class="chat-footer">
+        <time class="text-xs opacity-50">{new Date(message.time).toLocaleTimeString([], {
+          timeStyle: "short",
+        })}</time>
+      </div>
+    </div>
+  {/each}
+
+  <div class="divider">
+    <div class="badge font-medium text-white bg-red-600">
+      <span>LIVE</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .chat-container {
+    height: calc(100vh - 170px);
+  }
+</style>

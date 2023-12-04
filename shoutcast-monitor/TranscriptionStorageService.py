@@ -8,3 +8,6 @@ class TranscriptionStorageService:
   
   def add_entry(self, entry):
     self.__collection.insert_one(entry)
+
+  def add_entries(self, entries):
+    self.__collection.insert_many(entries)

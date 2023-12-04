@@ -11,8 +11,8 @@ services:
   mongo:
     image: mongodb/mongodb-community-server
     # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=asshat
-    #   - MONGO_INITDB_ROOT_PASSWORD=penis
+    #   - MONGO_INITDB_ROOT_USERNAME=user
+    #   - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - type: bind
         source: ./data
@@ -21,6 +21,13 @@ services:
       - "27017:27017"
     networks:
       - service-link
+  rabbitmq:
+    image: rabbitmq:3
+    ports:
+      - "5672:5672"
+    networks:
+      - service-link
+  
 networks:
   service-link:
     driver: bridge
