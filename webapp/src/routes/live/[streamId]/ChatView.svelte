@@ -28,14 +28,14 @@
 
 </script>
 
-<div bind:this={scrollableContainer} class="chat-container overflow-auto pt-3" class:scroll-smooth={scrollSmooth}>
+<div bind:this={scrollableContainer} class="chat-container overflow-auto pt-3 px-4" class:scroll-smooth={scrollSmooth}>
   {#each messages as message}
-    <div class="chat chat-start">
+    <div class="chat chat-start my-2">
       <!-- <div class="chat-header">
         <span class="mx-2 text-xs">{channelNames[message.channel]}</span>
       </div> -->
-      <div class="chat-bubble">{message.text}</div>
-      <div class="chat-footer">
+      <div class="chat-bubble mb-0">{message.text}</div>
+      <div class="chat-footer mt-0">
         <time class="text-xs opacity-50">{new Date(message.time).toLocaleTimeString([], {
           timeStyle: "short",
         })}</time>
@@ -43,15 +43,5 @@
     </div>
   {/each}
 
-  <div class="divider">
-    <div class="badge font-medium text-white bg-red-600">
-      <span>LIVE</span>
-    </div>
-  </div>
+  <hr class="my-4" />
 </div>
-
-<style>
-  .chat-container {
-    height: calc(100vh - 170px);
-  }
-</style>

@@ -1,22 +1,15 @@
 <script>
   export let color = "primary";
-  export let disabled = false;
-  export let outlined = false;
-  export let joined = false;
-  export let square = false;
-  export let ghost = false;
+  export let soft = false;
+  export let variant = "filled";
 
-  $: colorClass = `btn-${color}`
+  $: colorClass = `btn-${color}`;
+  $: variantClass = `variant-${variant}`;
 </script>
 
 <button
   on:click
-  class="btn {colorClass}"
-  class:btn-disabled={disabled}
-  class:btn-outline={outlined}
-  class:join-item={joined}
-  class:btn-square={square}
-  class:btn-ghost={ghost}
+  class="btn {variantClass} {colorClass}"
 >
   <slot />
 </button>

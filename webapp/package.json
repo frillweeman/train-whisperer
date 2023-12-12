@@ -1,21 +1,30 @@
 {
-	"name": "webapp",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview"
-	},
-	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/kit": "^1.27.4",
-		"autoprefixer": "^10.4.16",
-		"daisyui": "^4.4.17",
-		"postcss": "^8.4.31",
-		"svelte": "^4.2.7",
-		"tailwindcss": "^3.3.5",
-		"vite": "^4.4.2"
-	},
-	"type": "module"
+  "name": "webapp",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@skeletonlabs/skeleton": "^2.6.0",
+    "@skeletonlabs/tw-plugin": "^0.3.0",
+    "@sveltejs/adapter-auto": "^2.0.0",
+    "@sveltejs/kit": "^1.27.4",
+    "@tailwindcss/forms": "^0.5.7",
+    "@types/node": "^20.10.4",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "postcss-load-config": "^4.0.1",
+    "svelte": "^4.2.7",
+    "tailwindcss": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "vite": "^4.4.2"
+  },
+  "type": "module",
+  "dependencies": {
+    "@floating-ui/dom": "^1.5.3",
+    "@fortawesome/fontawesome-free": "^6.5.1"
+  }
 }

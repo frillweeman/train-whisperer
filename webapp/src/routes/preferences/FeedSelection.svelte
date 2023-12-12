@@ -1,38 +1,67 @@
 <script>
   import TextField from '$lib/global-components/TextField.svelte';
   import Button from '$lib/global-components/Button.svelte';
+  import { fade } from "svelte/transition";
 
   export let streams = [];
   export let streamToAdd = "";
+  
+  let isValidBroadcastifyUrl = true;
 
   const validationRegex = /^(?:https:\/\/)*(?:www\.)*broadcastify\.com\/listen\/feed\/\d{4}$/g;
-  const broadcastifyAnchor = '<a target="_blank" class="link" href="https://www.broadcastify.com/listen/">Broadcastify</a>';
+  const broadcastifyAnchor = '<a target="_blank" class="underline" href="https://www.broadcastify.com/listen/">Broadcastify</a>';
 
   function handleClick() {
     console.log('clicked');
   }
+  function validate({ target }) {
+    const { value } = target;
+    isValidBroadcastifyUrl = !value || validationRegex.test(value);
+  }
 </script>
 
-<div class="card shadow-xl bg-base-100">
-  <div class="card-body">
-    <h2 class="card-title">Manage Radio Feeds</h2>
+<div class="card shadow-xl">
+  <header class="card-header h3 font-bold mb-6">
+    Radio Feeds
+  </header>
 
-    <ul class="divide-y divide-slate-300">
+  <section class="px-4">
+    <ul class="divide-y divide-slate-500">
       {#each streams as stream}
       <li class="py-4 flex justify-between items-center">
-          <h3>{stream.title}</h3>
-          <Button ghost>
-            <svg class="h-6 fill-black dark:fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>delete</title><path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" /></svg>
-          </Button>
+          <h3>
+            {stream.title}
+          </h3>
+          <span>
+            {#if stream.channels > 1}
+              <div class="mx-2 text-xs font-bold chip variant-filled-surface">
+                <i class="fas fa-microphone" />
+                <span>x2</span>
+              </div>
+            {/if}
+            <Button variant="soft">
+              <i class="fas fa-trash text-lg" />
+            </Button>
+          </span>
         </li>
       {/each}
     </ul>
+  </section>
 
-    <form class="card-actions">
-      <div class="join w-full">
-        <TextField bind:value={streamToAdd} joined bordered placeholder="Broadcastify URL" hint="You can add a feed from {broadcastifyAnchor}" {validationRegex} />
-        <Button disabled={!streamToAdd} joined outlined color="primary" on:click={handleClick}>Add URL</Button>
+  <hr />
+
+  <footer class="card-footer mt-8">
+    <!-- <form> -->
+      <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
+        <div class="input-group-shim"><i class="fas fa-globe" /></div>
+        <input on:input={validate} class:input-error={!isValidBroadcastifyUrl} type="text" title="Broadcastify URL" placeholder="Broadcastify URL" />
+        <button class="variant-filled-secondary"><i class="fas fa-plus pr-2 text-sm" />Add</button>
       </div>
-    </form>
-  </div>
+      {#if isValidBroadcastifyUrl}
+        <span in:fade class="text-xs text-slate-500">You can find a feed on {@html broadcastifyAnchor}.</span>
+      {:else}
+        <span in:fade class="text-xs text-error-500">Invalid Broadcastify URL</span>
+      {/if}
+    <!-- </form> -->
+  </footer>
 </div>
