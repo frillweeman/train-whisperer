@@ -1,0 +1,28 @@
+/* Write your global styles here, in PostCSS syntax */
+
+@tailwind base;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+
+/* Scrollbar fixes */
+*::-webkit-scrollbar {
+  background-color: transparent;
+  width: 12px;
+}
+*::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  border: 3px solid transparent;
+  background-color: rgba(0, 0, 0, 0.3);
+  background-clip: content-box;
+}
+@tailwind components;
+@tailwind utilities;
