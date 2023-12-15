@@ -12,7 +12,7 @@ class TranscriptionService:
     self.__client = OpenAI(api_key=openai_api_key)
 
   def __postprocess(self, text):
-    return [t for t in re.split(r"\s*»»\s*", text[3:]) if t.strip()]
+    return [t for t in re.split(r"\s*»»\s*", text) if t.strip()]
 
   def transcribe(self, filename):
     afpath = path.join(path.dirname(path.realpath(__file__)), filename)

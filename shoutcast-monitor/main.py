@@ -15,8 +15,7 @@ config.read("config.ini")
 load_dotenv()
 logging.basicConfig(level=logging.ERROR)
 
-stream_url = config["shoutcast"]["stream_url"]
-monitor = ShoutcastMonitor(stream_url, "recordings/")
+monitor = ShoutcastMonitor("recordings/")
 
 ts = TranscriptionService(os.getenv("OPENAI_API_KEY"))
 tss = TranscriptionStorageService()
@@ -54,7 +53,8 @@ def handle_new_recording(path, channel_number):
   handle_transcription(path, channel_number)
 
 def main():
-  monitor.start(handle_new_recording)
+  url = sys.argv[1:]
+  monitor.start(url, handle_new_recording)
 
 if __name__ == "__main__":
   main()
