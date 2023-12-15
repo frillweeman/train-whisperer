@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 import configparser
 from TranscriptionStorageService import TranscriptionStorageService
 from ShoutcastMonitor import ShoutcastMonitor
-# from shared.MQService import MQService
+from MQService import MQService
+
+rabbitmq_host = "rabbitmq" if os.getenv('DOCKER_ENV') else "localhost"
 
 config = configparser.ConfigParser()
 config.read("config.ini")
@@ -19,8 +21,7 @@ monitor = ShoutcastMonitor("recordings/")
 
 ts = TranscriptionService(os.getenv("OPENAI_API_KEY"))
 tss = TranscriptionStorageService()
-# mqs = MQService(host="rabbitmq", exchange=config["mqservice"]["exchange"])
-# mqs.connect()
+mqs = MQService(host=rabbitmq_host, queue="transcribed")
 
 # Delete files upon exit
 def signal_handler(sig, frame):
@@ -36,16 +37,21 @@ signal.signal(signal.SIGINT, signal_handler)
 # Define a new function to handle transcription
 def handle_transcription(path, channel_number):
   messages = ts.transcribe(path)
-  entries = map(lambda message: {
-    'timestamp': datetime.now(),
-    'transcription': message
-  }, messages)
+
+  for message in messages:
+    now = datetime.now()
+    entry = {
+      'timestamp': now.strftime("%Y-%m-%d %H:%M:%S"),
+      'channel': channel_number,
+      'transcription': message
+    }
+    mqs.publish_event(entry)
+    print("\r" + entry['timestamp'] + " CH " + str(channel_number) + "\t" + message)
+
   # tss.add_entries(entries)
   # for message in entries: # send to RabbitMQ for SSE server
   #   mqs.publish_event(message)
-  for entry in entries:
-    timestamped_transcription = entry["timestamp"].strftime("%H:%M:%S: ") + entry["transcription"]
-    print("\rCH " + str(channel_number) + " @ " + timestamped_transcription)
+
   os.remove(path)
 
 def handle_new_recording(path, channel_number):
@@ -54,6 +60,7 @@ def handle_new_recording(path, channel_number):
 
 def main():
   url = sys.argv[1:]
+  mqs.connect()
   monitor.start(url, handle_new_recording)
 
 if __name__ == "__main__":

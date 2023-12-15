@@ -1,8 +1,9 @@
+import json
 import pika
 
 class MQService:
 
-  def __init__(self, host="localhost", port=5672, exchange="events"):
+  def __init__(self, host="localhost", port=5672, queue="events"):
     """
     Initialize the RabbitMQ client.
 
@@ -13,7 +14,8 @@ class MQService:
     """
     self.host = host
     self.port = port
-    self.exchange = exchange
+    self.queue = queue
+    self.exchange = ""
     self._connection = None
     self._channel = None
     self._callbacks = {}
@@ -26,7 +28,7 @@ class MQService:
       pika.ConnectionParameters(host=self.host, port=self.port)
     )
     self._channel = self._connection.channel()
-    self._channel.exchange_declare(exchange=self.exchange, exchange_type="fanout")
+    self._channel.queue_declare(queue=self.queue)
 
   def publish_event(self, payload):
     """
@@ -38,7 +40,7 @@ class MQService:
     if not self._connection or not self._connection.is_open:
       raise ConnectionError("Not connected to RabbitMQ")
     self._channel.basic_publish(
-      exchange=self.exchange, routing_key="", body=json.dumps(payload).encode()
+      exchange=self.exchange, routing_key=self.queue, body=json.dumps(payload).encode()
     )
 
   def subscribe_event(self, routing_key, callback):
@@ -50,9 +52,8 @@ class MQService:
       callback (callable): Function to be called when an event is received.
     """
     self._callbacks[routing_key] = callback
-    queue = self._channel.queue_declare().method.queue
-    self._channel.queue_bind(exchange=self.exchange, queue=queue, routing_key=routing_key)
-    self._channel.basic_consume(queue=queue, on_message_callback=self._on_message)
+    self._channel.basic_consume(queue=self.queue, on_message_callback=self._on_message)
+    self._channel.start_consuming()
 
   def _on_message(self, channel, method, properties, body):
     """
