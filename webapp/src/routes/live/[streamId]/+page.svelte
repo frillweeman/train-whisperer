@@ -91,6 +91,8 @@
       </div>
 
       <ChatView messages={data.transcriptions[`${activeStream.id}`]} channelNames={activeStream.channelNames} />
+
+      <audio class="hidden" src={activeStream.url} />      
     </div>
   {:else}
     <div>No active streams</div>

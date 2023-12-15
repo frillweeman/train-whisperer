@@ -12,10 +12,10 @@ class TranscriptionService:
     self.__client = OpenAI(api_key=openai_api_key)
 
   def __postprocess(self, text):
-    return re.split(r"\s*»»\s*", text[3:])
+    return [t for t in re.split(r"\s*»»\s*", text[3:]) if t.strip()]
 
   def transcribe(self, filename):
-    afpath = path.join(path.dirname(path.realpath(__file__)), "recordings", filename)
+    afpath = path.join(path.dirname(path.realpath(__file__)), filename)
     audio_file= open(afpath, "rb")
     transcript = self.__client.audio.transcriptions.create(
       model="whisper-1", 

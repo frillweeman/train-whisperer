@@ -5,15 +5,13 @@ export function load() {
         id: 1,
         channelNames: ['BNSF/UP'],
         url: 'https://broadcastify.cdnstream1.com/8083',
-        webpage: 'https://www.broadcastify.com/listen/feed/8083',
         title: 'BNSF/UP Seattle Sub - North End',
-        active: true,
+        active: false,
       },
       {
         id: 2,
         channelNames: ["NS", "CSX"],
         url: 'https://broadcastify.cdnstream1.com/6752',
-        webpage: 'https://www.broadcastify.com/listen/feed/6752',
         title: 'Decatur Area CSX and Norfolk Southern Rail',
         active: false,
       }

@@ -59,7 +59,7 @@
                 </span>
             </button>
           </div>
-          <h1>{title}</h1>
+          <h1><i class="fas fa-train mr-2 text-sm" />{title}</h1>
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <a class="btn-icon hover:variant-soft-primary" href="https://github.com/frillweeman/train-chatter" target="_blank">

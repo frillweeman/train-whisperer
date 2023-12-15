@@ -29,20 +29,10 @@
     <ul class="divide-y divide-slate-500">
       {#each streams as stream}
       <li class="py-4 flex justify-between items-center">
-          <h3>
-            {stream.title}
-          </h3>
-          <span>
-            {#if stream.channels > 1}
-              <div class="mx-2 text-xs font-bold chip variant-filled-surface">
-                <i class="fas fa-microphone" />
-                <span>x2</span>
-              </div>
-            {/if}
-            <Button variant="soft">
-              <i class="fas fa-trash text-lg" />
-            </Button>
-          </span>
+          <h3>{stream.title}</h3>
+          <Button variant="soft">
+            <i class="fas fa-trash text-lg" />
+          </Button>
         </li>
       {/each}
     </ul>
