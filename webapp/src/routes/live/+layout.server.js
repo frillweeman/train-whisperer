@@ -6,7 +6,7 @@ export function load() {
         channelNames: ['BNSF/UP'],
         url: 'https://broadcastify.cdnstream1.com/8083',
         title: 'BNSF/UP Seattle Sub - North End',
-        active: false,
+        active: true,
       },
       {
         id: 2,

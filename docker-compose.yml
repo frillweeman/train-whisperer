@@ -2,17 +2,12 @@ version: '3'
 services:
   shoutcast-monitor:
     build: ./shoutcast-monitor
-    volumes:
-      - ./shoutcast-monitor:/app
     depends_on:
       - mongo
     networks:
       - service-link
   mongo:
     image: mongodb/mongodb-community-server
-    # environment:
-    #   - MONGO_INITDB_ROOT_USERNAME=user
-    #   - MONGO_INITDB_ROOT_PASSWORD=password
     volumes:
       - type: bind
         source: ./data
@@ -25,6 +20,16 @@ services:
     image: rabbitmq:3
     ports:
       - "5672:5672"
+    networks:
+      - service-link
+  webapp:
+    build: ./webapp
+    depends_on:
+      - shoutcast-monitor
+      - mongo
+      - rabbitmq
+    ports:
+      - "5173:5173"
     networks:
       - service-link
   
