@@ -8,6 +8,6 @@
   {#if activeStream}
     <!-- redirect -->
   {:else}
-    <div>No active streams</div>
+    <div>No fucking active streams</div>
   {/if}
 </div>
