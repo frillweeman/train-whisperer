@@ -4,6 +4,6 @@ mq = MQService(queue="test")
 
 mq.connect()
 mq.publish_event({
-  "nigger": "yeah, why not"
+  "biggest": "yeah, why not"
 })
 mq.close()
