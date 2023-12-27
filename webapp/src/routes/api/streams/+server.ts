@@ -1,30 +1,7 @@
 import { RequestHandler, json } from "@sveltejs/kit";
 import { mongo } from "../../../lib/server/mongo"; // TODO: figure out why $lib/ isn't working
 import { InsertOneResult, ObjectId } from "mongodb";
-import { Stream } from "../../../types";
-
-const tmpData = {
-  applicationState: [
-    {
-      key: 'activeStreamId',
-      value: 1
-    }
-  ],
-  streams: [
-    {
-      _id: 1,
-      channelNames: [], // default
-      url: 'https://broadcastify.cdnstream1.com/8083',
-      title: 'BNSF/UP Seattle Sub - North End',
-    },
-    {
-      _id: 2,
-      channelNames: ["NS", "CSX"], // custom
-      url: 'https://broadcastify.cdnstream1.com/6752',
-      title: 'Decatur Area CSX and Norfolk Southern Rail',
-    }
-  ],
-}
+import { Stream } from "$lib/types";
 
 export const GET: RequestHandler = async (event) => {
   const db = await mongo;
@@ -34,7 +11,6 @@ export const GET: RequestHandler = async (event) => {
 
 export const POST: RequestHandler = async (event) => {
   const { url } = await event.request.json();
-  console.log('POST /api/streams/+server.ts:', url)
 
   // get stream title from <title> tag in head
   const response = await fetch(url);

@@ -13,7 +13,8 @@ export const DELETE: RequestHandler = async (event) => {
   console.log("received stream id", streamIdString, streamId);
 
   const db = await mongo;
-  db.collection("streams").deleteOne({ _id: streamId });
+  await db.collection("streams").deleteOne({ _id: streamId });
+  await db.collection("transcribed_audio").deleteMany({ streamId });
 
-  return json({ message: `[simulation] deleted ${streamId}` });
+  return json({ message: `deleted ${streamId}` });
 }
