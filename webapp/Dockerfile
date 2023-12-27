@@ -13,6 +13,7 @@ RUN npm install
 COPY . .
 
 # Build the SvelteKit application
+ENV VITE_IS_DOCKER=1
 RUN npm run build
 
 # Expose the default HTTP port

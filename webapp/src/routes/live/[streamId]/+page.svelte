@@ -61,7 +61,8 @@
     transcriptions = await fetch(`/api/transcriptions/${currentStream._id}`).then(res => res.json());
 
     if (isActive) {
-      eventSource = new EventSource('/api/transcriptions/live');
+      const host = (import.meta as any).env.VITE_IS_DOCKER ? 'shoutcast_monitor' : 'localhost';
+      eventSource = new EventSource(`http://${host}:8000/transcriptions/live`);
 
       eventSource.onmessage = (event) => {
         const newTranscription: any = JSON.parse(event.data);

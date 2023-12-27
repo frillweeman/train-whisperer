@@ -6,7 +6,7 @@ git fetch
 
 # Compare the local branch with the remote branch
 if git diff --quiet HEAD origin/master; then
-  echo "Local repository is already up to date."
+  echo "Local repository is already up to date. Run with -f to force a new build."
   # TODO: check for -f flag to continue regardless
   if [[ "$1" != "-f" ]]; then
       exit 0

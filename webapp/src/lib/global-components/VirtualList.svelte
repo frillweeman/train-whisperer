@@ -19,7 +19,6 @@
 	let viewport_height = 0;
 	let visible;
 	let mounted;
-  let initialized = false;
 
 	let top = 0;
 	let bottom = 0;
@@ -31,12 +30,12 @@
 
 	// whenever `items` changes, invalidate the current heightmap
 	$: if (mounted) refresh(items, viewport_height, itemHeight);
-  $: if (items && viewport) scrollToBottom();
+  // $: if (items) scrollToBottom();
 
   async function scrollToBottom() {
-    if (!autoScroll || isUserNearBottom()) return;
-    console.log("vieport.scrollHeight", viewport.scrollHeight);
-    viewport.scrollTop = viewport.scrollHeight;
+		console.log("scrollToBottom");
+    if (!autoScroll || !isUserNearBottom()) return;
+		viewport.scrollTo(0, viewport.scrollHeight);
   }
 
   function isUserNearBottom() {
@@ -74,14 +73,7 @@
 		bottom = remaining * average_height;
 		height_map.length = items.length;
 
-    if (!initialized) {
-      initialized = true;
-      scrollToBottom();
-      // await tick();
-      // scrollToBottom();
-    } else {
-      console.log("fuck you");
-    }
+		scrollToBottom();
 	}
 
 	async function handle_scroll() {
@@ -149,7 +141,6 @@
 
 	// trigger initial refresh
 	onMount(() => {
-    initialized = false;
 		rows = contents.getElementsByTagName('svelte-virtual-list-row');
 		mounted = true;
 	});

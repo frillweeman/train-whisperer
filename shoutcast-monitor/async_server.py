@@ -66,4 +66,4 @@ if __name__ == '__main__':
   app.router.add_post('/stop', handle_stop)
   app.router.add_get('/transcriptions/live', handle_sse)
 
-  web.run_app(app, port=8000, handle_signals=False)
+  web.run_app(app, port=8000, handle_signals=False, keepalive_timeout=0)

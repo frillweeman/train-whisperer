@@ -23,8 +23,6 @@
     drawerStore.close();
   }
 
-  let eventSource = null;
-
   onMount(() => {
     // initialize the stores with data from database
     loadStreams();

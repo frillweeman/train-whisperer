@@ -46,23 +46,7 @@
 </div>
 
 <style>
-/* .chat-container {
-  height: calc(100vh - 208px);
-} */
-
 .chat-container {
   height: calc(100vh - 208px);
-  position: relative;
-}
-
-.chat-container::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50px; /* Adjust this value to control the height of the gradient */
-  background: linear-gradient(to bottom, rgba(36, 44, 70, 0), rgba(36, 44, 70, 1));
-  pointer-events: none; /* This allows the user to still interact with the content underneath the gradient */
 }
 </style>
