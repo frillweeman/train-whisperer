@@ -2,12 +2,8 @@
   import { fade } from "svelte/transition";
   import { streams, deleteStream, addStream as addStreamToStore } from "../../stores/streams";
 
-  // export let streams = [];
   let streamToAdd = "";
   let isSubmitting = false;
-
-  // subscribe to the streams store using shorthand syntax
-  // $streams = streams;
 
   const validationRegex = /^(?:https:\/\/)*(?:www\.)*broadcastify\.com\/listen\/feed\/\d+$/g;
   const broadcastifyAnchor = '<a target="_blank" class="underline" href="https://www.broadcastify.com/listen/">Broadcastify</a>';

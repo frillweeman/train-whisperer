@@ -3,11 +3,11 @@
   import '@fortawesome/fontawesome-free/css/all.css';
   import Navigation from "../lib/navigation/Navigation.svelte";
   import { AppShell, AppBar } from "@skeletonlabs/skeleton";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { initializeStores, Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { storePopup } from '@skeletonlabs/skeleton';
-  import { loadStreams } from "../stores/streams";
+  import { loadStreams, streams } from "../stores/streams";
 
   initializeStores();
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
@@ -23,27 +23,13 @@
     drawerStore.close();
   }
 
-  // let eventSource = null;
+  let eventSource = null;
 
   onMount(() => {
     // initialize the stores with data from database
     loadStreams();
-
-
-    // const theme = localStorage.getItem("theme");
-    // if (theme) {
-    //   document.documentElement.setAttribute("data-theme", theme);
-    // }
-
-    // eventSource = new EventSource("http://localhost:8000");
-    // eventSource.onmessage = (event) => {
-    //   console.log(event);
-    // };
   });
 
-  // onDestroy(() => {
-  //   eventSource?.close();
-  // });
 </script>
 
 <Drawer width="56" rounded="no">
