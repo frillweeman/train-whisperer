@@ -2,7 +2,7 @@
   import ChatView from "./ChatView.svelte";
   import { popup } from "@skeletonlabs/skeleton";
   import type { PopupSettings } from "@skeletonlabs/skeleton";
-  import { streams, activeStream, setActiveStream, deactivateStream } from "../../../stores/streams";
+  import { streams, activeStream, setActiveStream, deactivateStream, renameChannels } from "../../../stores/streams";
   import { page } from "$app/stores";
   import { onMount, onDestroy } from "svelte";
   // import { BrowserTranscription, BrowserStream } from "../../../lib/types";
@@ -88,6 +88,15 @@
       .catch(err => console.error(err));
   }
 
+  // TODO: type this correctly
+  function handleChannelRename({ detail }: any): void {
+    const { channelNumber, newChannelName } = detail;
+    const channel1 = channelNumber === 1 ? newChannelName : (currentStream.channelNames[0] ?? "Broadcast");
+    const channel2 = channelNumber === 2 ? newChannelName : (currentStream.channelNames[1] ?? "Broadcast");
+    const newChannelNames = [channel1, channel2];
+    renameChannels(currentStream._id, newChannelNames);
+  }
+
   onDestroy(() => {
     eventSource?.close();
   });
@@ -154,7 +163,7 @@
     </div>
 
     {#if transcriptions.length > 0}
-      <ChatView messages={transcriptions} channelNames={currentStream.channelNames} />
+      <ChatView on:renameChannel={handleChannelRename} messages={transcriptions} channelNames={currentStream.channelNames} />
     {:else}
       <div class="text-center h4 p-4">Nothing yet!</div>
     {/if}

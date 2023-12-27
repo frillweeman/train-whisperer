@@ -1,9 +1,29 @@
-<script>
-  import { onMount, onDestroy } from "svelte";
+<script lang="ts">
   import VirtualList from "$lib/global-components/VirtualList.svelte";
+  import { getModalStore } from "@skeletonlabs/skeleton";
+  import type { ModalSettings } from '@skeletonlabs/skeleton';
+  import { createEventDispatcher } from "svelte";
 
   export let messages = [];
   export let channelNames = [""];
+
+  const modalStore = getModalStore();
+  const dispatch = createEventDispatcher();
+  
+  function showModal(channelNumber: number) {
+    const modal: ModalSettings = {
+      type: 'prompt',
+      title: 'Rename Channel',
+      body: `Please enter a new name for channel ${channelNumber}.`,
+      valueAttr: { type: 'text', minlength: 2, maxlength: 10, required: true },
+      
+      // Returns the updated response value
+      response: (newChannelName: string) => {
+        dispatch('renameChannel', { channelNumber, newChannelName });
+      },
+    };
+    modalStore.trigger(modal);
+  }
 
 </script>
 
@@ -16,7 +36,7 @@
     >
       <div class="chat-bubble mb-0">{item.text}</div>
       <div class="chat-footer mt-0">
-        <span class="text-xs font-bold">{channelNames[item.channelIndex - 1] ?? "Broadcast"}</span>
+        <span on:click={showModal.bind(null, item.channelIndex)} class="text-xs font-bold cursor-pointer">{channelNames[item.channelIndex - 1] ?? "Broadcast"}</span>
         <time class="text-xs opacity-50">{new Date(item.timestamp).toLocaleTimeString([], {
           timeStyle: "short",
         })}</time>

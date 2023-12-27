@@ -4,7 +4,7 @@
   import Navigation from "../lib/navigation/Navigation.svelte";
   import { AppShell, AppBar } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
-  import { initializeStores, Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
+  import { initializeStores, Drawer, getDrawerStore, Modal } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { storePopup } from '@skeletonlabs/skeleton';
   import { loadStreams, streams } from "../stores/streams";
@@ -32,6 +32,7 @@
 
 </script>
 
+<Modal />
 <Drawer width="56" rounded="no">
   <Navigation on:click={closeDrawer} />
 </Drawer>

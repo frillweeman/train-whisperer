@@ -63,6 +63,17 @@ export const deactivateStream = async () => {
   loadStreams();
 }
 
+export const renameChannels = async (streamId: string, channelNames: string[]) => {
+  await fetch(`/api/streams/${streamId}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ channelNames }),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  loadStreams();
+}
+
 async function stopMonitoring(): Promise<Response> {
   return await fetch('/api/streams/stop', {
     method: 'POST',
