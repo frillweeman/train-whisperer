@@ -7,7 +7,7 @@ services:
     networks:
       - service-link
   mongo:
-    image: mongodb/mongodb-community-server
+    image: mongodb/mongodb-community-server:latest
     volumes:
       - type: bind
         source: /var/lib/mongodb
