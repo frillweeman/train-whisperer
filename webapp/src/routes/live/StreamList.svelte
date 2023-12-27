@@ -21,6 +21,11 @@
           </a>
         </li>
       {/each}
+      {#if inactiveStreams.length === 0}
+        <li class="py-4 flex justify-between items-center">
+          <h3>No inactive streams</h3>
+        </li>
+      {/if}
     </ul>
   </section>
 </div>

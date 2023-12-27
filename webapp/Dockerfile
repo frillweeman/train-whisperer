@@ -18,5 +18,7 @@ RUN npm run build
 # Expose the default HTTP port
 EXPOSE 3000
 
+ENV DOCKER_ENV true
+
 # Start the server using @sveltejs/adapter-node
 CMD ["node", "build"]

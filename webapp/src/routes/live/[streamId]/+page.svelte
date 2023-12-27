@@ -156,10 +156,10 @@
     {#if transcriptions.length > 0}
       <ChatView messages={transcriptions} channelNames={currentStream.channelNames} />
     {:else}
-      <div class="text-center h4 p-4">Nothing yet! Recording...</div>
+      <div class="text-center h4 p-4">Nothing yet!</div>
     {/if}
 
-    <audio bind:this={audioElement} class="hidden" src={currentStream.url} />      
+    <audio bind:this={audioElement} class="hidden" src={null} />      
   </div>
   {/if}
 </div>

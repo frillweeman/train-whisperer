@@ -1,6 +1,6 @@
 version: '3'
 services:
-  shoutcast-monitor:
+  shoutcast_monitor:
     build: ./shoutcast-monitor
     depends_on:
       - mongo
@@ -10,26 +10,19 @@ services:
     image: mongodb/mongodb-community-server
     volumes:
       - type: bind
-        source: ./data
+        source: /var/lib/mongodb
         target: /data/db
     ports:
       - "27017:27017"
     networks:
       - service-link
-  rabbitmq:
-    image: rabbitmq:3
-    ports:
-      - "5672:5672"
-    networks:
-      - service-link
   webapp:
     build: ./webapp
     depends_on:
-      - shoutcast-monitor
+      - shoutcast_monitor
       - mongo
-      - rabbitmq
     ports:
-      - "5173:5173"
+      - "3000:3000"
     networks:
       - service-link
   

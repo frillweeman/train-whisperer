@@ -3,7 +3,6 @@ from main import start_monitoring_active_stream, stop_monitoring, start_monitori
 import json
 from threading import Event
 from queue import Empty
-from time import sleep
 import asyncio
 
 stop_event = Event()
@@ -55,12 +54,16 @@ async def handle_sse(request):
 
   return response
 
-app = web.Application()
-
-app.router.add_post('/start', handle_start)
-app.router.add_post('/stop', handle_stop)
-app.router.add_get('/transcriptions/live', handle_sse)
-
 if __name__ == '__main__':
+  print("Starting server...")
   start_monitoring_active_stream()
+
+  print("started monitoring active stream")
+  
+  app = web.Application()
+
+  app.router.add_post('/start', handle_start)
+  app.router.add_post('/stop', handle_stop)
+  app.router.add_get('/transcriptions/live', handle_sse)
+
   web.run_app(app, port=8000, handle_signals=False)

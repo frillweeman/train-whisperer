@@ -16,10 +16,12 @@ export const POST: RequestHandler = async (event) => {
   const response = await fetch(url);
   const html = await response.text();
   const maybeTitle = html.match(/<title>(.*)<\/title>/)?.[1];
+  const broadcastifyStreamId = url.match(/(\d+)/)?.[1];
+  const cdnUrl = `https://broadcastify.cdnstream1.com/${broadcastifyStreamId}`
   const newStream: Stream = {
     _id: undefined,
     channelNames: [],
-    url,
+    url: cdnUrl,
     title: maybeTitle || "Unnamed Stream",
   }
   const insertedDoc = await addStreamToDb(newStream);
