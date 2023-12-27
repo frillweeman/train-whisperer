@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# must be run as root
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run this script with sudo."
-  exit 1
-fi
-
 cd /home/trainwhisperer/train-whisperer
 
 git fetch
@@ -26,9 +20,9 @@ fi
 
 # Compare the local Caddyfile with the one in /etc/caddy
 if ! diff -q /home/trainwhisperer/train-whisperer/misc/Caddyfile /etc/caddy/Caddyfile >/dev/null; then
-  systemctl stop caddy
-  cp /home/trainwhisperer/train-whisperer/misc/Caddyfile /etc/caddy/Caddyfile
-  systemctl start caddy
+  sudo systemctl stop caddy
+  sudo cp /home/trainwhisperer/train-whisperer/misc/Caddyfile /etc/caddy/Caddyfile
+  sudo systemctl start caddy
 fi
 
 
