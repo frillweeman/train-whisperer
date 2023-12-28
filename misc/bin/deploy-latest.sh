@@ -21,9 +21,9 @@ fi
 # Compare the local Caddyfile with the one in /etc/caddy
 if ! diff -q /home/trainwhisperer/train-whisperer/misc/Caddyfile /etc/caddy/Caddyfile >/dev/null; then
   echo "Caddyfile has been updated. Restarting Caddy."
-  caddy fmt --overwrite /home/trainwhisperer/train-whisperer/misc/Caddyfile
   sudo systemctl stop caddy
   sudo cp /home/trainwhisperer/train-whisperer/misc/Caddyfile /etc/caddy/Caddyfile
+  sudo caddy fmt --overwrite /etc/caddy/Caddyfile
   sudo systemctl start caddy
 fi
 
