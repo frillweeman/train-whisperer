@@ -2,6 +2,10 @@
   admin off
 }
 
-youthfulgoon.com {
+:80, :443 {
   reverse_proxy localhost:3000
+}
+
+:8000 {
+  reverse_proxy localhost:8000
 }
