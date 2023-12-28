@@ -61,7 +61,8 @@
     transcriptions = await fetch(`/api/transcriptions/${currentStream._id}`).then(res => res.json());
 
     if (isActive) {
-      const host = (import.meta as any).env.VITE_IS_DOCKER ? 'shoutcast_monitor' : 'localhost';
+      // TODO: make this a config val
+      const host = (import.meta as any).env.VITE_IS_DOCKER ? 'https://youthfulgoon.com' : 'localhost';
       eventSource = new EventSource(`http://${host}:8000/transcriptions/live`);
 
       eventSource.onmessage = (event) => {
