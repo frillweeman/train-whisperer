@@ -2,11 +2,10 @@
   admin off
 }
 
-youthfulgoon.com {
-  @sse {
-    path /sse
-  }
+route /sse/* {
+  reverse_proxy localhost:8000
+}
 
-  reverse_proxy @sse localhost:8000/transcriptions/live
-  reverse_proxy /* localhost:3000
+route /* {
+  reverse_proxy localhost:3000
 }
