@@ -2,10 +2,9 @@
   admin off
 }
 
-handle_path /sse/* {
-	reverse_proxy localhost:8000
-}
-
 youthfulgoon.com {
+  handle_path /sse/* {
+    reverse_proxy localhost:8000
+  }
   reverse_proxy /* localhost:3000
 }
