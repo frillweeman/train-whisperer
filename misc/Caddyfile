@@ -2,10 +2,14 @@
   admin off
 }
 
-route /sse/* {
-  reverse_proxy localhost:8000
-}
+youthfulgoon.com {
+  @sse {
+    path /sse/*
+  }
 
-route /* {
-  reverse_proxy localhost:3000
+  reverse_proxy @sse localhost:8000 {
+    buffering off
+    flush_interval -1
+  }
+  reverse_proxy /* localhost:3000
 }
