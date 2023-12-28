@@ -3,11 +3,7 @@
 }
 
 youthfulgoon.com {
-  @sse {
-    path /sse/*
-  }
-
-  reverse_proxy @sse localhost:8000 {
+  reverse_proxy /sse/* localhost:8000 {
     buffering off
     flush_interval -1
   }
