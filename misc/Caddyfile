@@ -4,7 +4,6 @@
 
 youthfulgoon.com {
   reverse_proxy /sse/* localhost:8000 {
-    buffering off
     flush_interval -1
   }
   reverse_proxy /* localhost:3000
