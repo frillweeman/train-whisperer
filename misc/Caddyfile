@@ -2,10 +2,7 @@
   admin off
 }
 
-:80, :443 {
-  reverse_proxy localhost:3000
-}
-
-:8000 {
-  reverse_proxy localhost:8000
+youthfulgoon.com {
+  reverse_proxy /sse/* localhost:8000
+  reverse_proxy /* localhost:3000
 }

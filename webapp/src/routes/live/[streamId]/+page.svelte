@@ -62,8 +62,10 @@
 
     if (isActive) {
       // TODO: make this a config val
-      const host = (import.meta as any).env.VITE_IS_DOCKER ? 'https://youthfulgoon.com' : 'localhost';
-      eventSource = new EventSource(`http://${host}:8000/transcriptions/live`);
+      const sseUrl = (import.meta as any).env.VITE_IS_DOCKER ? 
+        'https://youthfulgoon.com/sse/transcriptions/live' : 
+        'http://localhost:8000/transcriptions/live';
+      eventSource = new EventSource(sseUrl);
 
       eventSource.onmessage = (event) => {
         const newTranscription: any = JSON.parse(event.data);
