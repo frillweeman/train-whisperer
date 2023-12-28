@@ -3,6 +3,9 @@
 }
 
 youthfulgoon.com {
-  reverse_proxy /sse/* localhost:8000
   reverse_proxy /* localhost:3000
+}
+
+youthfulgoon.com:8000 {
+  reverse_proxy /* localhost:8000
 }
