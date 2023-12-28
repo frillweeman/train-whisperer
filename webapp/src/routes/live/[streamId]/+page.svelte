@@ -63,7 +63,7 @@
     if (isActive) {
       // TODO: make this a config val
       const sseUrl = (import.meta as any).env.VITE_IS_DOCKER ? 
-        'https://youthfulgoon.com:8000/transcriptions/live' : 
+        'https://youthfulgoon.com/sse' :
         'http://localhost:8000/transcriptions/live';
       eventSource = new EventSource(sseUrl);
 
