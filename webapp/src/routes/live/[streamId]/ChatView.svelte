@@ -43,7 +43,7 @@
 
 <div class="chat-container overflow-auto pt-3 px-4 relative">
   {#if areNewItems}
-    <div class="absolute bottom-4 z-50 w-full text-center">
+    <div class="absolute bottom-4 z-50 left-0 right-0 text-center">
       <button on:click={vList.scrollToBottom} class="btn variant-filled-primary">
         <i class="fas fa-arrow-down mr-2" />
         New Messages

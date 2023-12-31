@@ -35,18 +35,16 @@
 	$: if (mounted) {
 		scrollToBottom();
 	}
-  $: if (items) scrollToBottom();
+  $: if (items && isUserNearBottom()) scrollToBottom();
 
   export async function scrollToBottom() {
-		if (autoScroll && !isUserNearBottom()) {
-			await tick();
-			viewport.scrollTo(0, viewport.scrollHeight);
-		}
+		await tick();
+		viewport.scrollTo(0, viewport.scrollHeight);
   }
 
   function isUserNearBottom() {
 		if (!mounted) return false;
-    const threshold = 20;
+    const threshold = 120;
     return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= threshold;
   }
 
