@@ -107,7 +107,7 @@
 </script>
 
 <svelte:head>
-  <title>{ currentStream.title }</title>
+  <title>{ currentStream?.title }</title>
 </svelte:head>
 <div>
   {#if currentStream}

@@ -7,6 +7,11 @@
   export let messages = [];
   export let channelNames = [""];
 
+  let lastItemDisplayed = Number.MAX_SAFE_INTEGER;
+  let vList;
+
+  $: areNewItems = messages.length > lastItemDisplayed + 1;
+
   const modalStore = getModalStore();
   const dispatch = createEventDispatcher();
   const today = new Date();
@@ -36,8 +41,16 @@
 
 </script>
 
-<div class="chat-container overflow-auto pt-3 px-4">
-  <VirtualList items={messages} let:item autoScroll>
+<div class="chat-container overflow-auto pt-3 px-4 relative">
+  {#if areNewItems}
+    <div class="absolute bottom-4 z-50 w-full text-center">
+      <button on:click={vList.scrollToBottom} class="btn variant-filled-primary">
+        <i class="fas fa-arrow-down mr-2" />
+        New Messages
+      </button>
+    </div>
+  {/if}
+  <VirtualList bind:this={vList} bind:end={lastItemDisplayed} items={messages} let:item autoScroll>
     <div
       class="chat chat-start my-2"
       class:text-left={item.channelIndex === 1}

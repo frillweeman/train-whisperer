@@ -29,16 +29,23 @@
 	});
 
 	// whenever `items` changes, invalidate the current heightmap
-	$: if (mounted) refresh(items, viewport_height, itemHeight);
-  // $: if (items) scrollToBottom();
+	$: if (mounted) {
+		refresh(items, viewport_height, itemHeight);
+	}
+	$: if (mounted) {
+		scrollToBottom();
+	}
+  $: if (items) scrollToBottom();
 
-  async function scrollToBottom() {
-		console.log("scrollToBottom");
-    if (!autoScroll || !isUserNearBottom()) return;
-		viewport.scrollTo(0, viewport.scrollHeight);
+  export async function scrollToBottom() {
+		if (autoScroll && !isUserNearBottom()) {
+			await tick();
+			viewport.scrollTo(0, viewport.scrollHeight);
+		}
   }
 
   function isUserNearBottom() {
+		if (!mounted) return false;
     const threshold = 20;
     return viewport.scrollHeight - viewport.scrollTop - viewport.clientHeight <= threshold;
   }
@@ -72,8 +79,6 @@
 
 		bottom = remaining * average_height;
 		height_map.length = items.length;
-
-		scrollToBottom();
 	}
 
 	async function handle_scroll() {
