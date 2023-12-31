@@ -32,10 +32,10 @@
 	$: if (mounted) {
 		refresh(items, viewport_height, itemHeight);
 	}
-	$: if (mounted) {
+	$: if (autoScroll && mounted) {
 		scrollToBottom();
 	}
-  $: if (items && isUserNearBottom()) scrollToBottom();
+  $: if (autoScroll && items && isUserNearBottom()) scrollToBottom();
 
   export async function scrollToBottom() {
 		await tick();
