@@ -4,7 +4,7 @@
   import type { PopupSettings } from "@skeletonlabs/skeleton";
   import { streams, activeStream, setActiveStream, deactivateStream, renameChannels } from "../../../stores/streams";
   import { page } from "$app/stores";
-  import { onMount, onDestroy } from "svelte";
+  import { onDestroy } from "svelte";
   // import { BrowserTranscription, BrowserStream } from "../../../lib/types";
 
   let eventSource: EventSource | undefined = undefined;
@@ -106,6 +106,9 @@
   });
 </script>
 
+<svelte:head>
+  <title>{ currentStream.title }</title>
+</svelte:head>
 <div>
   {#if currentStream}
   <div>

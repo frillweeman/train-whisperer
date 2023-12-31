@@ -57,8 +57,6 @@ async def handle_sse(request):
 if __name__ == '__main__':
   print("Starting server...")
   start_monitoring_active_stream()
-
-  print("started monitoring active stream")
   
   app = web.Application()
 

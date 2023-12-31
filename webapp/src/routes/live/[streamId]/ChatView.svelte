@@ -9,6 +9,13 @@
 
   const modalStore = getModalStore();
   const dispatch = createEventDispatcher();
+  const today = new Date();
+
+  function isToday(date: Date) {
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
+  }
   
   function showModal(channelNumber: number) {
     const modal: ModalSettings = {
@@ -19,6 +26,8 @@
       
       // Returns the updated response value
       response: (newChannelName: string) => {
+        if (!newChannelName)
+          return;
         dispatch('renameChannel', { channelNumber, newChannelName });
       },
     };
@@ -36,10 +45,11 @@
     >
       <div class="chat-bubble mb-0">{item.text}</div>
       <div class="chat-footer mt-0">
-        <span on:click={showModal.bind(null, item.channelIndex)} class="text-xs font-bold cursor-pointer">{channelNames[item.channelIndex - 1] ?? "Broadcast"}</span>
-        <time class="text-xs opacity-50">{new Date(item.timestamp).toLocaleTimeString([], {
-          timeStyle: "short",
-        })}</time>
+        <button on:click={showModal.bind(null, item.channelIndex)} class="text-xs font-bold cursor-pointer">{channelNames[item.channelIndex - 1] ?? "Broadcast"}</button>
+        <div class="text-xs opacity-50">
+          {isToday(new Date(item.timestamp)) ? "" : new Date(item.timestamp).toLocaleDateString([], { month: "numeric", day: "numeric" })}
+          <time>{new Date(item.timestamp).toLocaleTimeString([], { timeStyle: "short" })}</time>
+        </div>
       </div>
     </div>
   </VirtualList>

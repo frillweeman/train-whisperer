@@ -97,7 +97,7 @@ class ShoutcastMonitor:
   def start(self, url, new_recording_callback):
     if self.is_monitoring:
       return
-    print("Starting monitoring...")
+    print("Starting monitoring: " + url + "...")
     self.is_monitoring = True
     self.new_recording_callback = new_recording_callback
     Thread(target=self.monitor_stream, args=(url,)).start()
@@ -105,7 +105,7 @@ class ShoutcastMonitor:
   def stop(self):
     if not self.is_monitoring:
       return
-    print("Stopping monitoring...")
     self.stop_event.set()
     while self.is_monitoring:
       pass
+    print("Stopped monitoring")

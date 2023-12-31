@@ -3,6 +3,9 @@
   import StreamList from "./StreamList.svelte";
 </script>
 
+<svelte:head>
+  <title>Live Streams | Train Whisperer</title>
+</svelte:head>
 <div class="p-4">
   {#if $activeStream}
     <div class="card shadow-xl mb-4">

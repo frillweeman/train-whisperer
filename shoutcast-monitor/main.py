@@ -1,5 +1,5 @@
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from TranscriptionService import TranscriptionService
 import os
 import logging
@@ -49,7 +49,7 @@ def handle_transcription(path, channel_number):
   db_entries = []
 
   for message in messages:
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     entry = {
       'streamId': current_stream_id,
       'channelIndex': channel_number,
@@ -106,7 +106,7 @@ def start_monitoring_active_stream():
     print("Found active stream: " + stream_id_string)
     start_monitoring_with_stream_id(stream_id_string)
   else:
-    print("No active stream found, waiting for activation...")
+    print("No active stream found, waiting for activation.")
 
 def stop_monitoring():
   global monitoring_sse
