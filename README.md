@@ -20,6 +20,3 @@ I decided on Mongo since it's a NoSQL db, and I do not have any or anticipate an
 
 ### Docker / Docker Compose
 Each service (web app, Shoutcast monitor, MongoDB, RabbitMQ) is containerized and connected via `docker-compose`. I initially wanted to make a few distributed microservices on AWS native infrastructure, but the limiting factor was the cost of streaming audio all day. I settled on a DigitalOcean droplet for a few bucks a month that has the resources to run the containers without costing a fortune.
-
-### RabbitMQ
-I needed a message broker to communicate between Docker containers, and RabbitMQ was the simplest one I could find.
