@@ -4,6 +4,8 @@ Train Whisperer allows people to listen to and transcribe live railroad radio st
 
 Although this project started as a way for me to listen to train radio, it works with any Shoutcast stream, not limited to trains or even [Broadcastify](https://www.broadcastify.com).
 
+![Site Screenshots](https://github.com/frillweeman/train-whisperer/blob/7771465c42f53ee5175fbf7f2423e9862c34a533/docs/img/preview.webp)
+
 ## Stack
 
 ### Svelte/SvelteKit
